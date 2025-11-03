@@ -26,7 +26,7 @@ SYSTEM_MSG = (
     "Return ONLY valid JSON with no extra commentary."
 )
 
-# --- Prompt (your version, with outcome_raw kept) ---
+# --- Prompt ---
 PROMPT_HEADER_TEMPLATE = """Task:
 From the paper below, identify every reported association between visually observable contextual factors
 (i.e., elements that could plausibly be recognized in a single smartphone photo by a vision–language model)
@@ -37,7 +37,6 @@ STRICT SCENE SCOPE (must be visible in a single photo of human everyday life):
   number of people/crowding, companions (alone/with others), litter/clutter, indoor/outdoor, location type
   (home/office/park/street/transport/shop), daylight/lighting, uniforms/badges/signage, food/alcohol/cigarettes, screens/devices, clear room type cues.
 - Exclude if the factor requires multi-step events or specialized contexts not evident in a photo
-  (e.g., hospital transfer, traveling to another city, policy status, questionnaires, logistics).
 - Exclude VR/AR-only stimuli as the "factor" (unless the factor is the visible physical viewing setup/room).
 
 SIMPLE OUTCOME VOCAB ONLY:
@@ -47,7 +46,7 @@ Use your own reasoning to map the paper’s outcome wording to the closest one o
 For each distinct association, return objects with keys:
 - "factor" (short, human-readable, concrete and visible)
 - "outcome_raw" (the affective state wording used in the paper, verbatim/near-verbatim)
-- "outcome" (exactly one of the four allowed labels above)
+- "outcome LLM" (exactly one of the four allowed labels above)
 - "direction" ("positive" | "negative" | "curvilinear" | "mixed/none")
 - "vlm_detectability" ("likely" | "possible" | "unclear")
 - "notes" (≤20 words, optional)
@@ -69,7 +68,7 @@ PROMPT_FOOTER = """
 
 # Post-filters for obviously non-photo or lab contexts
 BANNED_FACTOR_KEYWORDS = (
-    "transfer", "travel", "airport", "border", "passport", "visa",
+    "travel", "passport", "visa",
     "virtual", "vr", "ar", "online", "internet", "screening video",
     "mouse", "mice", "rat", "rodent", "cage", "mesh", "maze", "morris", "platform",
     "lab", "laboratory", "gene", "mrna", "immuno", "iba-1", "qpcr",
@@ -152,8 +151,19 @@ def ask_llm_map_outcomes(client: OpenAI, phrases: list[str]) -> dict[int, str]:
     except Exception:
         return {}
 
+def doi_to_url(doi: str) -> str:
+    """Normalize various DOI strings to a clickable https://doi.org/... URL."""
+    doi = (doi or "").strip()
+    if not doi:
+        return ""
+    if doi.lower().startswith("doi:"):
+        doi = doi[4:].strip()
+    if doi.startswith("http://") or doi.startswith("https://"):
+        return doi.replace("dx.doi.org", "doi.org")
+    return f"https://doi.org/{doi}"
+
 def epmc_metadata_for_pmcid(pmcid: str):
-    """Return (title, citation, doi) for a PMCID using Europe PMC."""
+    """Return (title, citation, doi_url) for a PMCID using Europe PMC."""
     params = {"query": f"PMCID:{pmcid}", "format": "json", "pageSize": 1, "resultType": "lite"}
     r = requests.get(EPMC_SEARCH_URL, params=params, timeout=20)
     r.raise_for_status()
@@ -164,8 +174,9 @@ def epmc_metadata_for_pmcid(pmcid: str):
     first_chunk = (item.get("authorString") or "").split(";")[0].strip()
     surname = (first_chunk.split(",")[0] if "," in first_chunk else first_chunk.split()[0]).strip()
     citation = f"{surname} et al. {year}"
-    doi = (item.get("doi") or "").strip()
-    return (title, citation, doi)
+    doi_raw = (item.get("doi") or "").strip()
+    doi_url = doi_to_url(doi_raw)
+    return (title, citation, doi_url)
 
 def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -179,10 +190,10 @@ def main():
         writer.writerow([
             "factor",
             "outcome_raw",  # paper wording
-            "outcome",      # LLM-mapped (one of 4)
+            "outcome LLM",      # LLM-mapped (one of 4)
             "study_title",
             "citation",
-            "DOI",          # <-- new column
+            "DOI",          # a clickable https://doi.org/... URL
             "direction",
             "vlm_detectability",
             "notes",
@@ -236,7 +247,7 @@ def main():
                 idx_to_label = ask_llm_map_outcomes(client, outcome_phrases)
 
                 # 3) Write rows for successfully mapped items
-                title, citation, doi = epmc_metadata_for_pmcid(pmcid)
+                title, citation, doi_url = epmc_metadata_for_pmcid(pmcid)
                 if not title:
                     title = sanitize(text.splitlines()[0] if text.splitlines() else "")
 
@@ -257,7 +268,7 @@ def main():
                         label,
                         title,
                         citation,
-                        doi,                 # <-- write DOI here
+                        doi_url,            # write clickable DOI
                         rec["direction"],
                         rec["vlm"],
                         rec["notes"],
