@@ -2,3 +2,7 @@ __pycache__/
 artifacts/
 .env
 *.log
+test.py
+*.csv
+useless/
+goodoutputs/
