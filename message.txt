@@ -1,0 +1,52 @@
+epmc) malay@malay-XPS-15-9520:~/Documents/AmbuVision$ python test.py 
+Group 1 SocialInteraction: SocialGroup, SocialGathering, SocialCompanionship, SocialDistancing
+Group 2 NaturalScenery: NatureView, RuralLandscape, RuralArea, RuralHouse, RuralArea
+Group 3 Assistance: HelpingHands, HelpingHand, SupportGroup, SupportWorker, Teamwork, VolunteerGroup, TiredVolunteer
+Group 4 UrbanSettings: UrbanRural, UrbanArea, UrbanEnvironment, UrbanWorkplace, UrbanOffice, CityApartment, TownHouse
+Group 5 Solitude: LivingAlone, Alone, AlonePatient, AloneHome, AlonePerson, HomeAlone, WomanAlone, PatientAlone, SoloPerson, SoloLeisure, SoloBirth
+Group 6 PhysicalActivity: Exercise, Badminton, AirBadminton, Walking, OutdoorExercise
+Group 7 Transport: Helicopter, AmbulanceInterior, VacuumPump
+Group 8 Communication: VideoCall, PhoneCall, FaceToFace, PhoneCrossing
+Group 9 FamilyLife: FamilyPhoto, FamilyPlay, FamilySupport, FamilyMember, FamilyGroup
+Group 10 MedicalSettings: HospitalRoom, Hospital, UniversityHospital, HealthCenter, HealthOffice, ClinicScreening, MedicalConsult, MedicalAid, ICU, HospitalICU, ExamRoom, PsychologyClinic
+Group 11 Crowding: LowCrowding, CrowdedShelter, EmptyStreets, EmptyPublicSpace, EmptyRoom
+Group 12 Gender: Woman, Man, Male, Girl, Boy
+Group 13 Uniforms: PoliceUniform, FirefighterUniform, NurseUniform, MedicalUniform, WhiteCoat
+Group 14 Demographics: HouseholdSize, Residence, PrivateResidence, ResidentialSetting
+Group 15 Signage: NoSignage, ExclusionSign, ProtestSigns, ReligiousSymbol
+Group 16 Misc: nan
+Group 17 MedicalPersonnel: CounselorDesk, Doctor, Nurse, Therapist
+Group 18 Advertising: GamblingAds
+Group 19 Screens: ScreenTime, ComputerScreen, Screens
+Group 20 GroupActivities: GroupYoga, YogaMeditation, GroupTherapy, GroupSession, GroupMeeting, GroupInteraction, SmallGroup, Group
+Group 21 VisualElements: ColoredWalls, AmbientLighting, RainbowBenches
+Group 22 Spaces: RelaxationRoom, MeditationRoom, TherapySession, Therapy
+Group 23 Animals: Pets, Pet, KidsPets
+Group 24 Buildings: Farmhouse, Slum, BuildingDamage, HouseExterior
+Group 25 Drinks: BlueberryDrink, FruitDrink, BlackcurrantDrink, AlcoholicDrinks, AlcoholBottles, Alcohol, AlcoholDrink, HeavyDrinking
+Group 26 Food: FastFood, EnergySnack, FreshProduce, MediterraneanFood, FoodBaskets
+Group 27 ProtectiveGear: MissingPPE, PoorPPE, N95Mask, Masks, NoMask, PPE
+Group 28 Industry: Slaughterhouse, SlaughterFloor
+Group 29 Population: People, PeoplePresence, OtherPerson
+Group 30 Education: Teacher, TeacherStudentInteraction, GivingEraser, PositiveClassroom
+Group 31 Clutter: ClutteredHome, ClutteredBedroom, ClutteredRoom, ClutteredSpace, Clutter
+Group 32 MiscItems: SaltShaker, Mirrors
+Group 33 Events: RaceEvent, Circus, MallPlay
+Group 34 ChildCare: ChildrenHome, Playgroup, Children, Toddlers, MultipleKids, KidsPets, InfantMassage, NewbornBaby, PregnantWoman, PregnantAbdomen, PrenatalClass
+Group 35 Facilitation: SingleFacilitator
+Group 36 Violence: Weapons, Knife, ArmedPerson
+Group 37 Facilities: SharedToilet, AccessibleRamp, ParkAmenities, CleanStreet, GreenRows, Slope
+Group 38 HealthIssues: DentalMisalignment, SwollenLegs, Injury
+Group 39 Materials: HobbyMaterials, ConsumerGoods
+Group 40 Survey: Questionnaire
+Group 41 ClinicalInteraction: PatientInteraction
+Group 42 SocialHealth: HealthyPeers
+Group 43 Symbols: Cross
+Group 44 Hygiene: NoToothbrush
+Group 45 Age: Elderly
+Group 46 Behavior: DismissiveGestures, DistressedPerson
+Group 47 Care: NurseCare
+Group 48 SportsGear: SportsEquipment
+Group 49 LivingArrangements: Roommates
+Group 50 HomeSpaces: HomeInterior, IndoorSpace, IndoorHome, HomeOffice, HomeCooking, HomeVisit
+Group 51 OutdoorSpaces: Outdoor, Outdoors
