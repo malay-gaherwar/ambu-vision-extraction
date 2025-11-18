@@ -7,9 +7,9 @@ MODEL_NAME = os.environ.get("MODEL_NAME", "GPT-OSS-120B")
 BASE_URL = os.environ.get("OPENAI_BASE_URL", "http://pluto/v1/")
 API_KEY = os.environ.get("VIRTUAL_API_KEY", "VIRTUAL_API_KEY")
 
-INPUT_CSV  = "all_visual_associations.csv"
-OUTPUT_FILE = "llm_categorization.csv"
-n=100
+INPUT_CSV  = "artifacts/visual_factors/all_visual_associations.csv"
+OUTPUT_FILE = "artifacts/visual_factors/llm_categorization.csv"
+#n=100
 MAX_CONCURRENT = int(os.environ.get("MAX_CONCURRENT", "200"))
 
 SYSTEM_PROMPT = (
@@ -61,7 +61,9 @@ async def get_response(client: AsyncOpenAI, sem: asyncio.Semaphore, messages: li
             reasoning_effort="medium", 
             extra_body={"allowed_openai_params": ["reasoning_effort"]},
         )
-        return (resp.choices[0].message.content or "").strip()
+        result = (resp.choices[0].message.content or "").strip()
+        print(f"✅ Task completed. Result: {result}")
+        return result
 
 async def main_async():
     client = AsyncOpenAI(base_url=BASE_URL, api_key=API_KEY)

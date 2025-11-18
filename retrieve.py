@@ -164,7 +164,7 @@ def save_text(outdir: Path, pmcid: str, title: str, text: str) -> Path:
 
 def main():
     ap = argparse.ArgumentParser(
-        description="Stream ALL Europe PMC OA psychological studies and save minimal full text."
+        description="Stream ALL Europe PMC OA psychological studies and save full text."
     )
     ap.add_argument("--restrict", action="store_true",
                     help="Require at least one optional term (in title/abstract OR keywords).")

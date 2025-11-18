@@ -4,8 +4,8 @@ import numpy as np
 import os
 
 
-file_path = 'llm_categorization.csv'
-output_file = 'removed_none.csv'
+file_path = 'artifacts/visual_factors/llm_categorization.csv'
+output_file = 'artifacts/visual_factors/removed_none.csv'
 
 
 if not os.path.exists(file_path):
